@@ -1,11 +1,67 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+
+import React, { useState, useRef, useEffect } from 'react';
+import HeroSection from '@/components/HeroSection';
+import VerificationSection from '@/components/VerificationSection';
+import FakeIdOverlay from '@/components/FakeIdOverlay';
+import { useScrollObserver } from '@/hooks/use-scroll-observer';
+import { Toaster } from 'sonner';
 
 const Index = () => {
+  const [fakeIdDetected, setFakeIdDetected] = useState(false);
+  const [verificationVisible, setVerificationVisible] = useState(false);
+  const verificationRef = useRef<HTMLDivElement>(null);
+  
+  // Initialize scroll observer for animations
+  useScrollObserver();
+  
+  // Scroll to verification section
+  const scrollToVerification = () => {
+    verificationRef.current?.scrollIntoView({ behavior: 'smooth' });
+    
+    // Set verification section as visible after scrolling
+    setTimeout(() => {
+      setVerificationVisible(true);
+    }, 500);
+  };
+  
+  // Handle fake ID detection
+  const handleFakeIdDetected = () => {
+    setFakeIdDetected(true);
+  };
+  
+  // Apply closing animation class to HTML when fake ID is detected
+  useEffect(() => {
+    if (fakeIdDetected) {
+      document.documentElement.classList.add('overflow-hidden');
+    }
+    
+    return () => {
+      document.documentElement.classList.remove('overflow-hidden');
+    };
+  }, [fakeIdDetected]);
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-gray-600">Start building your amazing project here!</p>
+    <div className="relative">
+      {/* Toast notifications */}
+      <Toaster position="top-center" />
+      
+      {/* Hero Section */}
+      <HeroSection onScrollToVerify={scrollToVerification} />
+      
+      {/* Verification Section */}
+      <div ref={verificationRef}>
+        <VerificationSection 
+          onFakeIdDetected={handleFakeIdDetected}
+          isVisible={verificationVisible}
+        />
+      </div>
+      
+      {/* Fake ID Overlay with closing animation */}
+      <FakeIdOverlay isActive={fakeIdDetected} />
+      
+      {/* Animated elements on scroll */}
+      <div className="animate-on-scroll">
+        {/* This will be animated when scrolling into view */}
       </div>
     </div>
   );
