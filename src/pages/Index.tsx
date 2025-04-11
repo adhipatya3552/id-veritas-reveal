@@ -58,11 +58,6 @@ const Index = () => {
       
       {/* Fake ID Overlay with closing animation */}
       <FakeIdOverlay isActive={fakeIdDetected} />
-      
-      {/* Animated elements on scroll */}
-      <div className="animate-on-scroll">
-        {/* This will be animated when scrolling into view */}
-      </div>
     </div>
   );
 };
