@@ -6,8 +6,12 @@ import { Input } from '@/components/ui/input';
 import { toast } from 'sonner';
 import { motion } from '@/components/Motion';
 
-// Mock database of valid IDs
-const VALID_IDS = ['ID12345', 'ID67890', 'USER123', 'ADMIN456', 'VALID789'];
+// Extended mock database of valid IDs with more examples
+const VALID_IDS = [
+  'ID12345', 'ID67890', 'USER123', 'ADMIN456', 'VALID789',
+  'EMP001', 'EMP002', 'EMP003', 'STU1001', 'STU1002',
+  'PASS123', 'CARD456', 'LICENSE789', 'BADGE001', 'MEMBER123'
+];
 
 interface VerificationSectionProps {
   onFakeIdDetected: () => void;
